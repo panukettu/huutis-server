@@ -1,0 +1,14 @@
+# import * from './generated/prisma.graphql'
+
+type Mutation {
+  createProduct(data: ProductCreateInput): Product!
+  register(email: String!, displayName: String!, password: String!): User!
+  login(user: String!, password: String!): UserInfo!
+}
+
+type Query {
+  events(where: EventWhereInput): [Event]
+  products(where: ProductWhereInput): [Product]!
+  product(where: ProductWhereInput): Product!
+  me: UserInfo
+}

@@ -1,0 +1,7 @@
+endpoint: ${env:PRISMA_ENDPOINT}
+# secret: ${env:PRISMA_SECRET}
+datamodel: datamodel.graphql
+disableAuth: true
+hooks:
+  post-deploy:
+    - graphql get-schema --dotenv variables.env -p prisma

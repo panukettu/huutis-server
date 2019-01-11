@@ -1,0 +1,27 @@
+{
+  "name": "huutis-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -e js,graphql -x node index.js",
+    "prisma": "prisma deploy --env-file variables.env && npm run schema",
+    "schema": "graphql get-schema --dotenv variables.env -p prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.2.2",
+    "bcryptjs": "^2.4.3",
+    "core-js": "^2.6.0",
+    "dotenv": "^6.1.0",
+    "graphql-subscriptions": "^1.0.0",
+    "graphql-tag": "^2.10.0",
+    "graphql-yoga": "^1.16.7",
+    "jsonwebtoken": "^8.4.0",
+    "prisma-binding": "^2.2.8",
+    "subscriptions-transport-ws": "^0.9.15"
+  },
+  "devDependencies": {}
+}

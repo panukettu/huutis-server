@@ -1,0 +1,64 @@
+type User {
+  id: ID! @unique
+  displayName: String!
+  email: String! @unique
+  password: String!
+  createdAt: DateTime!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission]
+}
+
+enum Permission {
+  ADMIN
+  USER
+  PRODUCTCREATE
+  PRODUCTUPDATE
+  PRODUCTDELETE
+  EVENTCREATE
+  EVENTUPDATE
+  PERMISSIONUPDATE
+}
+
+type UserInfo {
+  id: ID! @unique
+  user: User!
+  bidTokens: Int!
+  purchaseTokens: Int
+}
+
+type Product {
+  id: ID! @unique
+  name: String!
+  description: String!
+  price: Int!
+  image: String
+  imageLarge: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Event {
+  id: ID! @unique
+  product: Product!
+  winner: User
+  type: EventType!
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  startTime: DateTime!
+  endTime: DateTime
+}
+
+type Bid {
+  id: ID! @unique
+  user: User!
+  event: Event!
+  createdAt: DateTime!
+}
+
+enum EventType {
+  FAST
+  NORMAL
+  SLOW
+}

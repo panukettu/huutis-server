@@ -1,0 +1,87 @@
+const { ApolloServer, gql, PubSub, withFilter } = require("apollo-server");
+const Timer = require("./timer");
+// The GraphQL schema
+const typeDefs = gql`
+  type Subscription {
+    eventTimer(id: ID): Timer
+  }
+  type Query {
+    "A simple type for getting started!"
+    getEvents: [Event]
+  }
+  type Timer {
+    id: Int
+    timer: Int
+  }
+  type Event {
+    id: ID
+    timer: Int
+    name: String
+    products: [Product]
+  }
+  type Product {
+    id: ID
+    name: String
+  }
+`;
+const pubsub = new PubSub();
+
+const events = [
+  {
+    id: 0,
+    name: "The Great Event",
+    product: 0,
+    timer: new Timer(pubsub, 0)
+  },
+  { id: 1, name: "Another Event", product: 0, timer: new Timer(pubsub, 1) }
+];
+
+events.forEach(event => event.timer.start());
+
+const products = [
+  {
+    id: 0,
+    name: "iPhone X"
+  }
+];
+
+// A map of functions which return data for the schema.
+const resolvers = {
+  Subscription: {
+    eventTimer: {
+      resolve(payload) {
+        console.log("Resolving with: ", payload);
+        return payload;
+      },
+      subscribe: withFilter(
+        () => pubsub.asyncIterator("TIMER"),
+        (payload, variables) => {
+          return variables.id == payload.id;
+        }
+      )
+    }
+  },
+  Query: {
+    getEvents(parent, args, context, info) {
+      return events;
+    }
+  },
+  Event: {
+    timer(event) {
+      return event.timer.getValue();
+    },
+    products(event) {
+      return products.filter(product => product.id === event.product);
+    }
+  }
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers
+});
+
+server.listen().then(({ url, subscriptionsUrl }) => {
+  console.log(`Server started at ${url}`);
+  console.log(`Subscriptions ready at ${subscriptionsUrl}`);
+});

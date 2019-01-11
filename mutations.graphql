@@ -1,0 +1,91 @@
+# Uusi käyttäjä
+# mutation luoKayttaja {
+#  createUser(
+#    data: {
+#      displayName: "irmeli55"
+#      email: "irmeli@gmail.com"
+#      password: "paskapökäle"
+#    }
+#  ) {
+#    # haetaan käyttäjän datat lisäyksen jälkeen tarkasteltavaksi #
+#    id
+#    displayName
+#   email
+#    password
+#  }
+# }
+
+# uusi tuote
+
+#mutation luoTuote {
+#  createProduct(
+#    data: {
+#      name: "Procaster TV"
+#      description: "Turkkilaista laatua"
+#      image:"procaster.jpg"
+#      imageLarge:"procaster-l.jpg"
+#      price: 10500
+#    }
+#  ) {
+#    id
+#    name
+#    description
+#    image
+#    imageLarge
+#    price
+#  }
+#}
+
+#mutation luoHuutis {
+#  createEvent(
+#    data: {
+#      type: SLOW
+#      description: "Isoa tavaraa kaupan!"
+#      product: { connect: { id: "cjp10ll6zn0vq0a03gkkdgot0" } }
+#      startTime: "2018-11-28"
+#    }
+#  ) {
+#    id
+#    product {
+#      name
+#    }
+#    winner {
+#      displayName
+#    }
+#    createdAt
+#  }
+#}
+
+#mutation luoHuutoja {
+#  createUserInfo(
+#    data: {
+#      bidTokens: 10
+#      purchaseTokens: 1
+#      user: { connect: { id: "cjp10gxxpn0ff0a03m92g62b3" } }
+#    }
+#  ) {
+#    id
+#    bidTokens
+#    purchaseTokens
+#  }
+#}
+
+#mutation luoHuutoTapahtuma {
+#  createBid(
+#    data: {
+#      event: { connect: { id: "cjp10v98on4hq0a03wbu1bpt8" } }
+#      user: { connect: { id: "cjp10gxxpn0ff0a03m92g62b3" } }
+#    }
+#  ) {
+#    id
+#    user {
+#      displayName
+#    }
+#    event {
+#      product {
+#        name
+#      }
+#    }
+#    createdAt
+#  }
+#}
